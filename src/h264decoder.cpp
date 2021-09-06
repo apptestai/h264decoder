@@ -19,7 +19,7 @@ typedef unsigned char ubyte;
 
 H264Decoder::H264Decoder()
 {
-  avcodec_register_all();
+  // avcodec_register_all();
 
   codec = avcodec_find_decoder(AV_CODEC_ID_H264);
   if (!codec)

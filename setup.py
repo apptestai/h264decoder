@@ -78,6 +78,7 @@ class CMakeBuild(build_ext):
 
 setup(
     name='h264decoder',
+    version="0.1.0",
     author='Michael Welter',
     ext_modules=[CMakeExtension('h264decoder')],
     cmdclass=dict(build_ext=CMakeBuild),
