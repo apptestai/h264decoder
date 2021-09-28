@@ -62,3 +62,6 @@ dist/
 *.egg-info/
 *build*/
 testclip.h264
+
+venv
+.DS_Store
