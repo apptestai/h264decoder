@@ -30,6 +30,16 @@ class CMakeBuild(build_ext):
             self.cmake_args = []
         else:
             self.cmake_args = shlex.split(self.cmake_args)
+        
+        if platform.system() == "Windows":
+            #  DCMAKE_TOOLCHAIN_FILE의 기본값 설정
+            _HAS_DCMAKE_TOOLCHAIN_FILE = False
+            for arg in self.cmake_args:
+                if 'DCMAKE_TOOLCHAIN_FILE' in arg:
+                    _HAS_DCMAKE_TOOLCHAIN_FILE = True
+                    break
+            if not _HAS_DCMAKE_TOOLCHAIN_FILE:
+                self.cmake_args += ["-DCMAKE_TOOLCHAIN_FILE=/opt/apps/vcpkg/scripts/buildsystems/vcpkg.cmake"]
 
     def run(self):   
         try:
