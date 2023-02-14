@@ -1,9 +1,16 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.10)
 project(h264decoder)
 
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 set (BuildExamples False CACHE BOOL "Build the examples")
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_CXX_STANDARD 17)
+if (NOT WIN32)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wpedantic -Wno-deprecated-declarations")
+endif()
 
 # Not working on Windows
 #   find_package(PkgConfig REQUIRED)
@@ -35,20 +42,14 @@ else()
   FetchContent_Declare(
     pybind11
     GIT_REPOSITORY https://github.com/pybind/pybind11
-    GIT_TAG v2.5.0)
+    # Recent PyBind11 version is required for Python 3.11 support.
+    GIT_TAG v2.10.2)
   FetchContent_MakeAvailable(pybind11)
 endif()
 
 
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CXX_STANDARD 14)
-if (NOT WIN32)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wpedantic -fPIC")
-endif()
-
-
 add_library(h264decoderlib STATIC src/h264decoder.cpp src/h264decoder.hpp)
-target_sources(h264decoderlib PUBLIC src/h264decoder.hpp)
+target_sources(h264decoderlib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/h264decoder.hpp)
 target_link_libraries(h264decoderlib PUBLIC ${FFMPEG_LIBRARIES})
 target_include_directories(h264decoderlib PUBLIC ${FFMPEG_INCLUDE_DIR})
 target_include_directories(h264decoderlib PUBLIC "src")

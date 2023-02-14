@@ -20,6 +20,7 @@ mechanisms of boost::python.
 #include <cstdlib>
 #include <stdexcept>
 #include <utility>
+#include <memory>
 
 struct AVCodecContext;
 struct AVFrame;
@@ -48,19 +49,29 @@ public:
 };
 
 
+struct ParseResult
+{
+  ptrdiff_t num_bytes_consumed = 0;
+  const AVFrame* frame = nullptr;
+};
+
+
 class H264Decoder
 {
   /* Persistent things here, using RAII for cleanup. */
   AVCodecContext        *context;
   AVFrame               *frame;
-  const AVCodec         *codec;
+  const AVCodec               *codec;
   AVCodecParserContext  *parser;
   /* In the documentation example on the github master branch, the 
 packet is put on the heap. This is done here to store the pointers 
 to the encoded data, which must be kept around  between calls to 
 parse- and decode frame. In release 11 it is put on the stack, too. 
   */
-  AVPacket              *pkt;
+  std::unique_ptr<AVPacket> pkt_;
+
+  const AVFrame* decode_frame();
+
 public:
   H264Decoder();
   ~H264Decoder();
@@ -70,9 +81,7 @@ the data and return the frame. parse returns the number
 of consumed bytes of the input stream. It stops consuming 
 bytes at frame boundaries.
   */
-  ptrdiff_t parse(const unsigned char* in_data, ptrdiff_t in_size);
-  bool is_frame_available() const;
-  const AVFrame& decode_frame();
+  ParseResult parse(const unsigned char* in_data, ptrdiff_t in_size);
 };
 
 // TODO: Rename to OutputStage or so?!
