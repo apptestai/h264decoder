@@ -69,7 +69,7 @@ vcpkg.exe install ffmpeg:x64-windows
 We can build the extension module with setuptools almost normally. However cmake is used internally and we have to let it know the search paths to our libs. Hence the additional ```--cmake-args``` argument with the toolchain file as per vcpkg instructions.
 
 ```bash
-python setup.py build_ext --cmake-args="-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake"
+CMAKE_USER_ARGS="-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake" python setup.py build_ext
 pip install -e .
 ```
 

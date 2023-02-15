@@ -20,15 +20,6 @@ class CMakeExtension(Extension):
 
 
 class CMakeBuild(build_ext):
-    user_options = build_ext.user_options + [("cmake-args=", None, "options to pass to cmake")]
-
-    def initialize_options(self):
-        build_ext.initialize_options(self)
-        self.cmake_args = None
-
-    def finalize_options(self):
-        build_ext.finalize_options(self)
-
     def run(self):
         try:
             out = subprocess.check_output(["cmake", "--version"])
@@ -62,10 +53,9 @@ class CMakeBuild(build_ext):
         else:
             cmake_args += ["-DCMAKE_BUILD_TYPE=" + cfg]
             build_args += ["--", "-j2"]
-
-        if self.cmake_args:
-            cmake_args.extend(shlex.split(self.cmake_args))  # Provided on command line
-
+        cmake_user_args = os.environ.get("CMAKE_USER_ARGS", "")
+        if cmake_user_args:
+            cmake_args.extend(shlex.split(cmake_user_args))  # Provided in env variable
         env = os.environ.copy()
         env["CXXFLAGS"] = '{} -DVERSION_INFO=\\"{}\\"'.format(
             env.get("CXXFLAGS", ""), self.distribution.get_version()  # pyright: ignore[reportGeneralTypeIssues]
