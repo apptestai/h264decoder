@@ -68,3 +68,5 @@ testclip.h264
 
 venv
 .DS_Store
+
+poetry.toml

@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "h264decoder"
+version = "0.1.2"
+description = "h264decoder"
+authors = ["KyoungMo Yang <km.yang@apptest.ai>"]
+license = "Apache License, Version 2.0"
+include = [
+    "src",
+    "CMakeLists.txt",
+]
+exclude = [
+    "examples",
+    "tests",
+    "scripts",
+    ".pylint",
+    ".flake8",
+    ".gitignore",
+    ".env",
+    "mypy.ini",
+]
+build = "build.py"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+cmake = "^3.25.2"
+black = "^22.3.0"
+pytest = "^7.1.2"
+mypy = "^0.942"
+pylint = "^2.13.7"
+isort = "^5.10.1"
+numpy = "^1.24.2"
+matplotlib = "^3.7.0"
+pybind11 = "^2.10.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
