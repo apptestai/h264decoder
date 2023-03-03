@@ -32,6 +32,7 @@ pylint = "^2.13.7"
 isort = "^5.10.1"
 numpy = "^1.24.2"
 matplotlib = "^3.7.0"
+setuptools = "^67.4.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
