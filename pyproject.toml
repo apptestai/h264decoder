@@ -24,7 +24,6 @@ build = "setup.py"
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
-cmake = "^3.25.2"
 black = "^22.3.0"
 pytest = "^7.1.2"
 mypy = "^0.942"
