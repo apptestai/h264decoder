@@ -9,7 +9,7 @@ from distutils.version import LooseVersion
 from pathlib import Path
 from typing import Any, Dict
 
-from setuptools import Extension
+from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
 
 
@@ -66,24 +66,24 @@ class CMakeBuild(build_ext):
         subprocess.check_call(["cmake", "--build", "."] + build_args, cwd=self.build_temp)
 
 
-def build(setup_kwargs: Dict[str, Any]) -> None:
-    # cython_modules = cythonize(
-    #     [
-    #         Extension(
-    #             "project.package.cython_extension",
-    #             sources=["project/package/cython_extension.pyx"],
-    #             # include_dirs=[get_numpy_include(), "."],
-    #         )
-    #     ]
-    # )
-    # cmake_modules = [CMakeExtension("project.package.pybind11_extension", sourcedir="project/package/pybind11_extension")]
-    # ext_modules = cython_modules + cmake_modules
-    ext_modules = [CMakeExtension("h264decoder")]
-    # ext_modules = [Pybind11Extension("h264decoder", sorted(glob("src/*.cpp"))), CMakeExtension(f"h264decoder", sourcedir="src")]
-    setup_kwargs.update(
-        {
-            "ext_modules": ext_modules,
-            "cmdclass": dict(build_ext=CMakeBuild),
-            "zip_safe": False,
-        }
-    )
+packages = ["h264decoder"]
+package_data = {"": ["*"]}
+setup_kwargs: Dict[str, Any] = {
+    "name": "h264decoder",
+    "version": "0.1.2",
+    "description": "h264decoder",
+    "author": "KyoungMo Yang",
+    "author_email": "km.yang@apptest.ai",
+    "packages": packages,
+    "package_data": package_data,
+    "python_requires": ">=3.8,<4.0",
+}
+ext_modules = [CMakeExtension("h264decoder")]
+setup_kwargs.update(
+    {
+        "ext_modules": ext_modules,
+        "cmdclass": dict(build_ext=CMakeBuild),
+        "zip_safe": False,
+    }
+)
+setup(**setup_kwargs)

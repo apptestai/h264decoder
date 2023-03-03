@@ -18,7 +18,7 @@ exclude = [
     ".env",
     "mypy.ini",
 ]
-build = "build.py"
+build = "setup.py"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -34,5 +34,5 @@ numpy = "^1.24.2"
 matplotlib = "^3.7.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "setuptools>=60.10.0"]
-build-backend = "poetry.core.masonry.api"
+requires = [ "scikit-build>=0.12", "setuptools>=42", "cmake>=3.10"]
+build-backend = "setuptools.build_meta"
