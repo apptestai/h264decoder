@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "h264decoder"
-version = "0.1.2"
+version = "0.1.3rc1"
 description = "h264decoder"
 authors = ["KyoungMo Yang <km.yang@apptest.ai>"]
 license = "Apache License, Version 2.0"
