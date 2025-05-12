@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "h264decoder"
-version = "0.1.3rc1"
+version = "0.1.3"
 description = "h264decoder"
 authors = ["KyoungMo Yang <km.yang@apptest.ai>"]
 license = "Apache License, Version 2.0"
@@ -19,6 +19,11 @@ exclude = [
     "mypy.ini",
 ]
 build = "setup.py"
+
+[[tool.poetry.source]]
+name = "apptestai"
+url = "https://sf.apptest.ai/api/v4/projects/321/packages/pypi"
+default = true
 
 [tool.poetry.dependencies]
 python = "^3.8"

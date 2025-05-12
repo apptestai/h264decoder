@@ -70,7 +70,7 @@ packages = ["h264decoder"]
 package_data = {"": ["*"]}
 setup_kwargs: Dict[str, Any] = {
     "name": "h264decoder",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "h264decoder",
     "author": "KyoungMo Yang",
     "author_email": "km.yang@apptest.ai",
